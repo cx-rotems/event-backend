@@ -11,7 +11,7 @@ var DB *sql.DB
 
 func InitDB() {
 	var err error
-	DB, err = sql.Open("sqlite", "C:/Learn/Hannah/EventBackend/database/sqlite/events.db")
+	DB, err = sql.Open("sqlite", "./database/sqlite/events.db")
 	if err != nil {
 		log.Fatalf("Failed to connect to the database: %v", err)
 	}
