@@ -3,15 +3,28 @@ package database
 import (
 	"database/sql"
 	"log"
+	"os"
+	"github.com/joho/godotenv"
 
 	_ "modernc.org/sqlite"
 )
 
 var DB *sql.DB
 
+const databaseUrl = "./database/sqlite/events.db";
+
 func InitDB() {
-	var err error
-	DB, err = sql.Open("sqlite", "./database/sqlite/events.db")
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatalf("Error loading .env file")
+	}
+
+	dbURL := os.Getenv("DATABASE_URL")
+	if dbURL == "" {
+		dbURL = databaseUrl
+	}
+
+	DB, err = sql.Open("sqlite", dbURL)
 	if err != nil {
 		log.Fatalf("Failed to connect to the database: %v", err)
 	}

@@ -3,6 +3,8 @@ package main
 import (
 	"log"
 	"net/http"
+	"os"
+	"github.com/joho/godotenv"
 
 	"EventBackend/database"
 	"EventBackend/handlers"
@@ -11,6 +13,18 @@ import (
 )
 
 func main() {
+	// Load .env file
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
+	// Get port from environment variable or use default
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080" // Default port
+	}
+
 	// Initialize database
 	database.InitDB()
 	defer database.DB.Close()
@@ -25,6 +39,6 @@ func main() {
 	router.HandleFunc("/api/names/{id}", handlers.DeleteName).Methods("DELETE") // Add
 
 	// Start server
-	log.Println("Server running on http://localhost:8080")
-	log.Fatal(http.ListenAndServe(":8080", router))
+	log.Println("Server running on http://localhost:" + port)
+	log.Fatal(http.ListenAndServe(":"+port, router))
 }
