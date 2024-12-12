@@ -22,6 +22,7 @@ func main() {
 	router.HandleFunc("/api/names", handlers.GetNames).Methods("GET")
 	router.HandleFunc("/api/names", handlers.AddName).Methods("POST")
 	router.HandleFunc("/api/names/{id}", handlers.UpdateArrivedStatus).Methods("PUT")
+	router.HandleFunc("/api/names/{id}", handlers.DeleteName).Methods("DELETE") // Add
 
 	// Start server
 	log.Println("Server running on http://localhost:8080")
