@@ -11,7 +11,7 @@ import (
 
 var DB *sql.DB
 
-const databaseUrl = "./database/sqlite/events.db";
+const databaseUrl = "/root/database/events.db";
 
 func InitDB() {
 	err := godotenv.Load()
